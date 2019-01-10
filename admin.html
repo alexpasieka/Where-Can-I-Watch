@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Admin Page</title>
+
+    <!-- Vue Bootstrap Styles -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css">
+
+    <!-- Personal Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase.js"></script>
+    <script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyA1RD-6o_VYJqqSZf86tYL_SRMCkUiu9vA",
+			authDomain: "where-can-i-watch.firebaseapp.com",
+			databaseURL: "https://where-can-i-watch.firebaseio.com",
+			projectId: "where-can-i-watch",
+			storageBucket: "where-can-i-watch.appspot.com",
+			messagingSenderId: "945437401944"
+		};
+		firebase.initializeApp(config);
+    </script>
+</head>
+<body>
+    <!-- Vue Root -->
+    <div id="app">
+        <!-- Masthead -->
+        <masthead title="Admin Page" instructions="See all past search terms and many times they have been used."></masthead>
+
+        <!-- Data Table -->
+        <div class="col">
+            <table id="termTable" class="table table-striped table-dark">
+                <thead>
+                    <th>Search Term</th>
+                    <th>Frequency</th>
+                </thead>
+                <tbody v-html="tableContent">
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Loading Spinner -->
+        <div class="lds-ring" v-bind:style="toggleSpinner"><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <!-- Footer -->
+    <footer>Alex Pasieka &copy;2018</footer>
+
+    <!-- Vue Bootstrap Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+    <!-- Personal Vue Scripts -->
+    <script src="index.js"></script>
+    <script src="admin.js"></script>
+</body>
+</html>

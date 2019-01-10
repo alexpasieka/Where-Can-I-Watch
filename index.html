@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+
+    <title>Where Can I Watch?</title>
+    <link rel="shortcut icon" href="favicon.png">
+
+    <!-- Vue Bootstrap Styles -->
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.css">
+
+    <!-- Personal Styles -->
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/5.7.1/firebase.js"></script>
+    <script>
+		// Initialize Firebase
+		var config = {
+			apiKey: "AIzaSyA1RD-6o_VYJqqSZf86tYL_SRMCkUiu9vA",
+			authDomain: "where-can-i-watch.firebaseapp.com",
+			databaseURL: "https://where-can-i-watch.firebaseio.com",
+			projectId: "where-can-i-watch",
+			storageBucket: "where-can-i-watch.appspot.com",
+			messagingSenderId: "945437401944"
+		};
+		firebase.initializeApp(config);
+    </script>
+</head>
+<body>
+    <!-- Vue Root -->
+    <div id="app">
+        <!-- Masthead -->
+        <masthead v-bind:title="title" v-bind:instructions="instructions"></masthead>
+
+        <!-- Main Page Content -->
+        <div class="container">
+            <!-- Information Modal -->
+            <b-modal id="modal" hide-footer v-bind:title="currentResult.title + ' ' + currentResult.year">
+                <p class="my-2" v-for="a in availability">{{a.display_name}}</p>
+            </b-modal>
+
+            <!-- Search -->
+            <div class="row search">
+                <div class="col">
+                    <!-- Input -->
+                    <span>Where can I watch </span>
+                        <input v-on:keyup.13="search(term, type, 1)" v-model="term" v-bind:placeholder="lastSearch">
+                    <span>?</span>
+
+                    <!-- Type Selector -->
+                    <label>Type:
+                        <select v-model="type">
+                            <option value="">All</option>
+                            <option value="movie">Movies</option>
+                            <option value="series">TV Shows</option>
+                        </select>
+                    </label>
+
+                    <!-- Button -->
+                    <br>
+                    <button class="btn btn-success" @click="search(term, type, 1)">Search</button>
+                </div>
+            </div>
+
+            <!-- Loading Spinner -->
+            <div class="lds-ring" v-bind:style="toggleSpinner"><div></div><div></div><div></div><div></div></div>
+
+            <!-- Results -->
+            <div class="row results">
+                <!-- Result Item -->
+                <div v-b-modal.modal class="col-3 item" v-for="r in result" @click="searchAvailability(r)">
+                    <!-- Poster -->
+                    <img v-bind:src="r.poster" v-bind:alt="r.title">
+                </div>
+
+                <!-- Pagination -->
+                <div class="col-3 item">
+                    <button class="btn btn-info pagination" v-bind:style="togglePagination" @click="previousPage">Previous</button>
+                </div>
+                <div class="col-3 item">
+                    <button class="btn btn-info pagination" v-bind:style="togglePagination" @click="nextPage">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>Alex Pasieka &copy;2018</footer>
+
+    <!-- Vue Bootstrap Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/babel-polyfill@latest/dist/polyfill.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@latest/dist/bootstrap-vue.js"></script>
+
+    <!-- Personal Vue Script -->
+    <script src="index.js"></script>
+</body>
+</html>
